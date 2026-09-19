@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Komal's Happiness Loop 🐾 | Animated Squishy Cat</title>
-    <meta name="description" content="An interactive heartwarming animated pastel cat experience designed especially for Komal to absorb sadness with tummy pokes, funny hats, and personalized compliments!">
-    
+    <title>Happiness Loop 🐾 | Animated Squishy Cat</title>
+    <meta name="description"
+        content="An interactive heartwarming animated pastel cat experience designed especially for Komal to absorb sadness with tummy pokes, funny hats, and personalized compliments!">
+
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐱</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐱</text></svg>">
 </head>
+
 <body>
     <!-- Ambient Floating Clouds -->
     <div class="ambient-bg">
@@ -116,7 +120,8 @@
                     "Komal, you have the absolute sweetest heart in the whole world! 🌸"
                 </div>
                 <div class="compliment-footer">
-                    <span style="font-size: 0.9rem; color: #9A7B8E; font-weight: 700;">🐾 Absorbed into pure happiness!</span>
+                    <span style="font-size: 0.9rem; color: #9A7B8E; font-weight: 700;">🐾 Absorbed into pure
+                        happiness!</span>
                 </div>
             </div>
         </section>
@@ -160,7 +165,8 @@
     <div class="victory-modal" id="victoryModal">
         <div class="victory-card">
             <div class="victory-badge">🏆 MISSION ACCOMPLISHED 🏆</div>
-            <h1 class="victory-title">Yay! <span class="recipient-name" id="victoryRecipientName">Komal</span> is happy again! 🎉</h1>
+            <h1 class="victory-title">Yay! <span class="recipient-name" id="victoryRecipientName">Komal</span> is happy
+                again! 🎉</h1>
             <p class="victory-description">
                 You successfully broke the sadness loop! As your official reward, you have unlocked:
             </p>
@@ -192,18 +198,20 @@
     <div class="name-modal-overlay" id="nameGeneratorModal" style="display: none;">
         <div class="name-modal-card">
             <button class="modal-close-btn" id="btnCloseNameModal" aria-label="Close modal">✕</button>
-            
+
             <div class="modal-badge">🌸 SPREAD HAPPINESS 🐾</div>
             <h2 class="modal-title">Who do you want to make happy? ✨</h2>
-            <p class="modal-subtitle">Enter their name to generate a personalized link with custom tummy pokes, sweet notes, and cheerful smiles!</p>
-            
+            <p class="modal-subtitle">Enter their name to generate a personalized link with custom tummy pokes, sweet
+                notes, and cheerful smiles!</p>
+
             <!-- Input Step -->
             <div class="name-input-group" id="nameInputStep">
                 <div class="input-wrapper">
                     <span class="input-icon">💖</span>
-                    <input type="text" id="targetNameInput" class="kawaii-input" placeholder="e.g. Komal, Sarah, Alex..." maxlength="30" autocomplete="off">
+                    <input type="text" id="targetNameInput" class="kawaii-input"
+                        placeholder="e.g. Komal, Sarah, Alex..." maxlength="30" autocomplete="off">
                 </div>
-                
+
                 <div class="modal-button-group">
                     <button class="btn-generate-link" id="btnGenerateLink">
                         <span>✨ Generate Magic Link 💌</span>
@@ -219,7 +227,7 @@
                 <div class="success-banner">
                     <span>🎉 Magic link ready for <strong id="linkRecipientLabel">Komal</strong>!</span>
                 </div>
-                
+
                 <div class="link-box-wrapper">
                     <input type="text" id="generatedLinkInput" class="generated-link-field" readonly>
                     <button class="btn-copy-link" id="btnCopyLink">
@@ -236,7 +244,7 @@
                         <span>🚀 Open Experience</span>
                     </button>
                 </div>
-                
+
                 <button class="btn-create-another" id="btnCreateAnother">
                     <span>🔄 Enter Another Name</span>
                 </button>
@@ -249,4 +257,5 @@
     <script src="cat.js"></script>
     <script src="app.js"></script>
 </body>
+
 </html>
