@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Komal's Happiness Loop 🐾 | Animated Squishy Cat</title>
+    <meta name="description" content="An interactive heartwarming animated pastel cat experience designed especially for Komal to absorb sadness with tummy pokes, funny hats, and personalized compliments!">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐱</text></svg>">
+</head>
+<body>
+    <!-- Ambient Floating Clouds -->
+    <div class="ambient-bg">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
+    </div>
+
+    <!-- Particle Overlay Canvas (Paws, Hearts, Confetti) -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- Fullscreen Opening Letter Screen (Swiping Experience) -->
+    <div class="intro-letter-screen" id="introLetterScreen">
+        <div class="letter-screen-content">
+            <div class="letter-badge">💌 Special Delivery for <span class="recipient-name">Komal</span></div>
+            <h1 class="letter-greeting">Hi cutiepieee! 🌸</h1>
+            <p class="letter-subgreeting">Open the letter to continue ✨</p>
+
+            <!-- 3D Animated Cartoon Envelope -->
+            <div class="envelope-wrapper" id="envelopeWrapper">
+                <div class="cartoon-envelope" id="envelope">
+                    <!-- Envelope Back/Interior -->
+                    <div class="envelope-back"></div>
+
+                    <!-- Letter Card peeking inside -->
+                    <div class="inner-letter" id="innerLetter">
+                        <div class="letter-stamp">🐾</div>
+                        <div class="inner-letter-title">Dear <span class="recipient-name">Komal</span> 💖</div>
+                        <div class="inner-letter-text">A little friend has been waiting for you...</div>
+                        <div class="inner-letter-heart">🎀</div>
+                    </div>
+
+                    <!-- Envelope Front Pocket -->
+                    <div class="envelope-front"></div>
+
+                    <!-- Envelope Flap that flips up on swipe -->
+                    <div class="envelope-flap" id="envelopeFlap"></div>
+
+                    <!-- Wax Seal with Heart -->
+                    <div class="wax-seal" id="waxSeal">
+                        <span class="seal-heart">💖</span>
+                    </div>
+                </div>
+
+                <!-- Interactive Swipe Up Indicator -->
+                <div class="swipe-prompt" id="swipePrompt">
+                    <div class="swipe-arrow-track">
+                        <div class="swipe-chevron">▲</div>
+                        <div class="swipe-chevron">▲</div>
+                    </div>
+                    <span class="swipe-label">Swipe up to open ✉️</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Magical Screen Flash Overlay (Full screen bright bloom then slow fade) -->
+    <div class="screen-flash-overlay" id="screenFlash"></div>
+
+    <!-- Top App Navigation & Sound Controls -->
+    <header class="app-header">
+        <div class="brand-badge">
+            <span class="brand-sparkle">✨</span>
+            <span id="brandTitle"><span class="recipient-name">Komal</span>'s Happiness Loop</span>
+        </div>
+        <div class="header-controls">
+            <button id="btnCreateCustomLink" class="icon-pill-btn btn-magic" aria-label="Make Someone Happy">
+                <span>🎁</span>
+                <span>Make Someone Happy</span>
+            </button>
+            <button id="soundToggleBtn" class="icon-pill-btn" aria-label="Toggle Sound">
+                <span id="soundIcon">🔊</span>
+                <span id="soundText">Sound On</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Game Container -->
+    <main class="app-container">
+        <!-- Loop Progress Pill (Shows during loops) -->
+        <div class="loop-indicator" id="loopIndicator">
+            <span>✨ Happiness Loop: Round <span id="loopRoundNum">1</span></span>
+        </div>
+
+        <!-- Dynamic Speech Bubble -->
+        <div class="speech-bubble-container">
+            <div class="speech-bubble" id="speechBubble">
+                Aww, <span class="recipient-name">Komal</span>... Are u sad today? 🥺
+            </div>
+        </div>
+
+        <!-- Interactive Cat Stage -->
+        <div class="cat-stage" id="catStage">
+            <!-- Cat SVG injected via cat.js -->
+            <div id="catMount"></div>
+        </div>
+
+        <!-- Glowing Compliment Card Reveal -->
+        <section class="compliment-card-container" id="complimentCard">
+            <div class="compliment-card">
+                <div class="compliment-header">
+                    <span>🌸 Sweet Note For <span class="recipient-name">Komal</span> 🌸</span>
+                </div>
+                <div class="compliment-text" id="complimentText">
+                    "Komal, you have the absolute sweetest heart in the whole world! 🌸"
+                </div>
+                <div class="compliment-footer">
+                    <span style="font-size: 0.9rem; color: #9A7B8E; font-weight: 700;">🐾 Absorbed into pure happiness!</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Interactive Action Panel -->
+        <section class="action-panel" id="actionPanel">
+            <!-- State 1: Intro Choice Buttons -->
+            <div class="button-group" id="introButtons">
+                <button class="action-btn btn-sad" id="btnYesSad">
+                    <span>Yes, I'm sad...</span>
+                    <span>🥺</span>
+                </button>
+                <button class="action-btn btn-happy" id="btnFeelingGood">
+                    <span>I'm feeling good!</span>
+                    <span>✨</span>
+                </button>
+            </div>
+
+            <!-- State 2: Waiting For Poke (Belly Poke hint button for accessibility/clicking) -->
+            <div class="button-group" id="pokeButtons" style="display: none;">
+                <button class="action-btn btn-primary-victory" id="btnPokeHint">
+                    <span>👉 Tap My Squishy Belly! 👈</span>
+                </button>
+            </div>
+
+            <!-- State 3: Loop Check Decision Buttons -->
+            <div class="button-group" id="loopCheckButtons" style="display: none;">
+                <button class="action-btn btn-loop-sad" id="btnStillSad">
+                    <span>Still a little sad...</span>
+                    <span>😿</span>
+                </button>
+                <button class="action-btn btn-loop-happy" id="btnHappierNow">
+                    <span>I feel happier now!</span>
+                    <span>😸</span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Fullscreen Victory Celebration Modal -->
+    <div class="victory-modal" id="victoryModal">
+        <div class="victory-card">
+            <div class="victory-badge">🏆 MISSION ACCOMPLISHED 🏆</div>
+            <h1 class="victory-title">Yay! <span class="recipient-name" id="victoryRecipientName">Komal</span> is happy again! 🎉</h1>
+            <p class="victory-description">
+                You successfully broke the sadness loop! As your official reward, you have unlocked:
+            </p>
+
+            <!-- Hugs Counter / Dispenser -->
+            <div class="hugs-counter-box">
+                <div class="hugs-number" id="hugsCount">10,000</div>
+                <div class="hugs-label">Fluffy Cat Hugs Collected 🐾</div>
+            </div>
+
+            <div class="victory-actions">
+                <button class="btn-claim-hug" id="btnClaimMoreHugs">
+                    <span>💖 Tap for 1,000 More Hugs! 🐱</span>
+                </button>
+                <button class="btn-share-friend" id="btnShareFriend">
+                    <span>💌 Send Happiness To A Friend</span>
+                </button>
+                <button class="btn-restart" id="btnPlayAgain">
+                    <span>🔄 Play Again With Your Pastel Cat</span>
+                </button>
+                <button class="btn-restart" id="btnReopenLetter" style="font-size: 0.92rem; opacity: 0.85;">
+                    <span>💌 Reopen Cutiepie Letter</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Name Input & Shareable Link Generator Modal -->
+    <div class="name-modal-overlay" id="nameGeneratorModal" style="display: none;">
+        <div class="name-modal-card">
+            <button class="modal-close-btn" id="btnCloseNameModal" aria-label="Close modal">✕</button>
+            
+            <div class="modal-badge">🌸 SPREAD HAPPINESS 🐾</div>
+            <h2 class="modal-title">Who do you want to make happy? ✨</h2>
+            <p class="modal-subtitle">Enter their name to generate a personalized link with custom tummy pokes, sweet notes, and cheerful smiles!</p>
+            
+            <!-- Input Step -->
+            <div class="name-input-group" id="nameInputStep">
+                <div class="input-wrapper">
+                    <span class="input-icon">💖</span>
+                    <input type="text" id="targetNameInput" class="kawaii-input" placeholder="e.g. Komal, Sarah, Alex..." maxlength="30" autocomplete="off">
+                </div>
+                
+                <div class="modal-button-group">
+                    <button class="btn-generate-link" id="btnGenerateLink">
+                        <span>✨ Generate Magic Link 💌</span>
+                    </button>
+                    <button class="btn-quick-play" id="btnPlayWithCurrentName">
+                        <span>🐾 Experience Now</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Generated Link Output Step -->
+            <div class="link-output-group" id="linkOutputStep" style="display: none;">
+                <div class="success-banner">
+                    <span>🎉 Magic link ready for <strong id="linkRecipientLabel">Komal</strong>!</span>
+                </div>
+                
+                <div class="link-box-wrapper">
+                    <input type="text" id="generatedLinkInput" class="generated-link-field" readonly>
+                    <button class="btn-copy-link" id="btnCopyLink">
+                        <span id="copyBtnIcon">📋</span>
+                        <span id="copyBtnText">Copy</span>
+                    </button>
+                </div>
+
+                <div class="share-actions-row">
+                    <button class="btn-share-whatsapp" id="btnShareWhatsapp">
+                        <span>💬 Share on WhatsApp</span>
+                    </button>
+                    <button class="btn-open-link" id="btnOpenPersonalizedLink">
+                        <span>🚀 Open Experience</span>
+                    </button>
+                </div>
+                
+                <button class="btn-create-another" id="btnCreateAnother">
+                    <span>🔄 Enter Another Name</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="audio.js"></script>
+    <script src="cat.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
